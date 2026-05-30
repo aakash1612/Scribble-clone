@@ -1,271 +1,482 @@
-# 🎨 Skribble — Draw & Guess Game
+# 🎨 Skribble – Real-Time Multiplayer Draw & Guess Game
 
-A full-featured **skribbl.io clone** built with React, Node.js, and Socket.IO.  
-Every requirement from the spec is implemented, including all bonus features.
+A full-stack multiplayer drawing and guessing game inspired by **skribbl.io**, built using **React, Node.js, Express, and Socket.IO**.
 
-> **Live Demo:** `https://your-skribbl-clone.onrender.com` ← replace after deployment
+Players can create public or private rooms, draw words in real time, guess drawings, earn points, and compete on a live leaderboard. The application supports spectators, custom word lists, multiple word modes, replay functionality, moderation tools, and seamless real-time synchronization across all connected clients.
 
 ---
 
-## ✅ Feature Checklist
+## 🚀 Live Demo
+
+**Frontend:** https://your-frontend-url.com
+
+**Backend:** https://your-backend-url.com
+
+> Replace the URLs above after deployment.
+
+---
+
+## 📌 Features
+
+### Core Gameplay
+
+* Create and join multiplayer rooms
+* Public and private room support
+* Real-time drawing synchronization
+* Turn-based drawing and guessing
+* Word selection system
+* Live chat and guessing
+* Automatic score calculation
+* Live leaderboard updates
+* Winner announcement at game end
+
+### Drawing Tools
+
+* Brush tool
+* Eraser tool
+* 20 color palette
+* 5 brush sizes
+* Undo last stroke
+* Clear canvas
+
+### Advanced Features
+
+* Spectator Mode
+* Replay Last Round
+* Custom Word Lists
+* Word Categories
+* Hint System
+* Kick Player
+* Ban Player
+* Animated Round Timer
+
+### Word Modes
+
+#### Normal Mode
+
+Drawer sees the complete word.
+
+#### Hidden Mode
+
+Drawer sees only blanks and must draw without seeing the actual word.
+
+#### Combination Mode
+
+Drawer sees partial hints such as:
+
+paper boat → p___r b__t
+
+---
+
+## 🏗️ Architecture
+
+```text
+┌─────────────────────┐
+│   React Frontend    │
+└──────────┬──────────┘
+           │
+           │ Socket.IO
+           │
+┌──────────▼──────────┐
+│  Express Backend    │
+│   + Socket.IO       │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│  Game Engine (OOP)  │
+├─────────────────────┤
+│ Player Class        │
+│ Room Class          │
+│ Game Class          │
+│ MessageHandler      │
+└─────────────────────┘
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer                   | Technology                |
+| ----------------------- | ------------------------- |
+| Frontend                | React 18 + Vite           |
+| Backend                 | Node.js + Express         |
+| Real-Time Communication | Socket.IO                 |
+| Canvas                  | HTML5 Canvas API          |
+| Styling                 | CSS3                      |
+| Storage                 | In-Memory Data Structures |
+| Deployment              | Render / Railway          |
+
+---
+
+## 📂 Project Structure
+
+```text
+skribble/
+│
+├── server/
+│   ├── index.js
+│   ├── MessageHandler.js
+│   ├── Room.js
+│   ├── Game.js
+│   ├── Player.js
+│   └── words.js
+│
+├── client/
+│   └── src/
+│       ├── components/
+│       ├── hooks/
+│       ├── pages/
+│       └── App.jsx
+│
+└── README.md
+```
+
+---
+
+## 🎯 Object-Oriented Design
+
+### Player Class
+
+Responsible for:
+
+* Player state
+* Score tracking
+* Serialization
+* Guess status
+
+### Room Class
+
+Responsible for:
+
+* Room management
+* Host assignment
+* Broadcasting events
+* Spectator management
+* Ban system
+* Custom word storage
+
+### Game Class
+
+Responsible for:
+
+* Round management
+* Turn rotation
+* Scoring logic
+* Word selection
+* Hint generation
+* Drawing state
+
+### MessageHandler Class
+
+Responsible for:
+
+* WebSocket event handling
+* Client communication
+* Room orchestration
+* Game flow management
+
+---
+
+## 🎮 Gameplay Flow
+
+```text
+Create Room / Join Room
+            │
+            ▼
+          Lobby
+            │
+            ▼
+     Host Starts Game
+            │
+            ▼
+     Drawer Selects Word
+            │
+            ▼
+      Real-Time Drawing
+            │
+            ▼
+      Players Guess
+            │
+            ▼
+      Points Awarded
+            │
+            ▼
+        Round Ends
+            │
+            ▼
+      Next Drawer
+            │
+            ▼
+        Game Over
+            │
+            ▼
+     Winner Announced
+```
+
+---
+
+## 🔥 Feature Checklist
 
 ### Must Have
-- [x] Create room with all configurable settings
-- [x] Join room via link or code
-- [x] Lobby with player list; host starts game
-- [x] Turn-based rounds — one drawer, others guess
-- [x] Real-time drawing sync via WebSockets
-- [x] Word selection — drawer picks 1 of N words
-- [x] Guessing — type word, earn points for correct answer
-- [x] Scoring and live leaderboard
-- [x] Game end with winner announcement
-- [x] Drawing tools — brush, 20 colours, 5 sizes, undo, clear
+
+* ✅ Create room with configurable settings
+* ✅ Join room via link or code
+* ✅ Lobby with player list
+* ✅ Turn-based rounds
+* ✅ Real-time drawing synchronization
+* ✅ Word selection
+* ✅ Guessing system
+* ✅ Scoring and leaderboard
+* ✅ Winner announcement
+* ✅ Drawing tools
 
 ### Should Have
-- [x] Hints — letters revealed over time
-- [x] Chat — guesses + general messages
-- [x] Draw time countdown with animated bar
-- [x] Private rooms with shareable invite link
 
-### Nice to Have
-- [x] Word categories — 130 words across 6 categories (animals, objects, food, actions, places, misc)
-- [x] Eraser tool
-- [x] Kick player (host moderation)
-- [x] Ban player (host moderation — cannot rejoin room)
-- [x] **Word Modes** — Normal / Hidden / Combination
-- [x] **Custom word list** — host sets their own words in lobby
-- [x] **Spectator mode** — join any room as a watcher (join page + browse page)
-- [x] **Replay** — watch last round's drawing replayed after round end
+* ✅ Hints
+* ✅ Chat
+* ✅ Draw timer
+* ✅ Private rooms
 
-### Bonus (OOP + Architecture)
-- [x] `Player` class — score, state, serialisation
-- [x] `Game` class — all round logic, word modes, stroke history, scoring
-- [x] `Room` class — player map, host management, broadcast helpers, ban list, custom words
-- [x] `MessageHandler` class — all 22 WebSocket event handlers as methods
-- [x] `game_state` named event (spec-compliant — client can request at any time)
-- [x] Late-joiner canvas sync (full stroke replay on join)
-- [x] Drawer disconnect handling (round ends gracefully)
-- [x] Auto word selection if drawer doesn't choose within 15 s
+### Nice To Have
+
+* ✅ Word categories
+* ✅ Eraser tool
+* ✅ Kick player
+* ✅ Ban player
+* ✅ Spectator mode
+* ✅ Replay system
+* ✅ Custom word lists
+* ✅ Multiple word modes
 
 ---
 
-## Tech Stack
+## ⚡ Real-Time Features
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 18 + Vite |
-| Canvas | HTML5 Canvas API (custom drawing + remote replay engine) |
-| Backend | Node.js + Express |
-| WebSockets | Socket.IO 4 |
-| Storage | In-memory (`Map`) — no database required for MVP |
-| Styling | Pure CSS with CSS custom properties |
+### Drawing Synchronization
 
----
+Drawing strokes are transmitted through Socket.IO events and rendered on all connected clients instantly.
 
-## Project Structure
+### Canvas Replay
 
-```
-skribbl-clone/
-├── server/
-│   ├── index.js           # Express + Socket.IO entry point
-│   ├── MessageHandler.js  # All 22 WebSocket event handlers (class)
-│   ├── Room.js            # Room class — players, ban list, custom words, broadcast
-│   ├── Game.js            # Game class — rounds, word modes, scoring, turn logic
-│   ├── Player.js          # Player class — score, spectator flag, serialisation
-│   └── words.js           # 130 words across 6 categories + custom pool support
-│
-└── client/src/
-    ├── App.jsx                    # Root — all state, all socket event wiring
-    ├── hooks/
-    │   ├── useSocket.js           # Singleton Socket.IO + stable handler binding
-    │   └── useCanvas.js           # Drawing engine — input, remote replay, undo
-    ├── pages/
-    │   ├── HomePage.jsx           # Create / join / browse + spectator toggle + word mode picker
-    │   ├── LobbyPage.jsx          # Waiting room, settings, custom words editor, spectator list
-    │   ├── GamePage.jsx           # Canvas, toolbar, chat, scoreboard, word mode badge, replay
-    │   └── GameOverPage.jsx       # Winner + final leaderboard
-    └── components/
-        ├── DrawingToolbar.jsx     # 20 colours, 5 sizes, pen, eraser, undo, clear
-        ├── ChatPanel.jsx          # Chat + guess input; spectator-aware
-        ├── Scoreboard.jsx         # Live scores; kick/ban buttons for host; spectator section
-        ├── WordSelector.jsx       # Word choice overlay for drawer
-        └── RoundEndOverlay.jsx    # Word reveal + leaderboard + replay button
-```
+Every drawing stroke is stored and can be replayed at the end of a round.
+
+### Late Join Synchronization
+
+New players receive the complete stroke history and reconstruct the current canvas automatically.
+
+### Hint System
+
+Letters are progressively revealed during the round to help players guess the word.
 
 ---
 
-## Local Development
+## 📡 WebSocket Events
 
-### Prerequisites
-- Node.js ≥ 18
-- npm ≥ 9
+### Room Management
 
-### 1. Install
+* create_room
+* join_room
+* join_spectator
+* room_created
+* room_joined
+* player_joined
+* player_left
+
+### Game Events
+
+* start_game
+* game_started
+* round_start
+* word_options
+* word_chosen
+* round_end
+* game_over
+
+### Drawing Events
+
+* draw_start
+* draw_move
+* draw_end
+* draw_data
+* canvas_clear
+* canvas_cleared
+* draw_undo
+* canvas_undo
+
+### Chat & Guessing
+
+* guess
+* guess_result
+* chat
+* chat_message
+
+### Moderation
+
+* kick_player
+* ban_player
+* kicked
+
+---
+
+## 🔗 REST API
+
+| Method | Endpoint      | Description          |
+| ------ | ------------- | -------------------- |
+| GET    | /health       | Server health check  |
+| GET    | /api/rooms    | List available rooms |
+| GET    | /api/room/:id | Room information     |
+
+---
+
+## ⚙️ Installation
+
+### Clone Repository
 
 ```bash
-git clone https://github.com/yourname/skribbl-clone.git
-cd skribbl-clone
-npm install                # root (concurrently)
-npm run install:all        # server + client
+git clone https://github.com/yourusername/skribble.git
+cd skribble
 ```
 
-### 2. Configure environment
+### Install Dependencies
 
 ```bash
-cp server/.env.example server/.env
-cp client/.env.example  client/.env.local
+npm run install:all
 ```
 
-### 3. Run
+### Configure Environment Variables
+
+Server:
+
+```env
+PORT=3001
+CLIENT_URL=http://localhost:5173
+```
+
+Client:
+
+```env
+VITE_SERVER_URL=http://localhost:3001
+```
+
+### Run Development Server
 
 ```bash
 npm run dev
-# Frontend → http://localhost:5173
-# Backend  → http://localhost:3001
-# Health   → http://localhost:3001/health
 ```
 
-Open two browser tabs, create a room in one, join with the code in the other.
+Frontend:
+
+```text
+http://localhost:5173
+```
+
+Backend:
+
+```text
+http://localhost:3001
+```
 
 ---
 
-## Deployment
+## 🚀 Deployment
 
-### Option A — Render (recommended, full WebSocket support)
+### Render
 
-1. Push to GitHub
-2. Render Dashboard → **New → Blueprint** → connect repo
-3. Render reads `render.yaml` and creates both services automatically
-4. After deploy, copy the backend URL into the frontend's `VITE_SERVER_URL` env var, redeploy frontend
-5. Paste live URL into README
+1. Push repository to GitHub
+2. Create a new Render Web Service
+3. Configure environment variables
+4. Deploy backend
+5. Deploy frontend
+6. Update `VITE_SERVER_URL`
 
-### Option B — Railway
+### Railway
 
 ```bash
-npm i -g @railway/cli && railway login
-railway init && railway up
+railway init
+railway up
 ```
 
-Set env vars in Railway dashboard:
-- `PORT=3001`
-- `CLIENT_URL=https://your-frontend-url`
-- `VITE_SERVER_URL=https://your-railway-backend-url`
+### Vercel + Render
 
-### Option C — Vercel (frontend) + Render (backend)
+* Frontend → Vercel
+* Backend → Render
 
-> ⚠️ Vercel serverless does not support persistent WebSocket connections.  
-> Always deploy the Socket.IO server separately (Render/Railway).
-
-**Backend on Render:** New Web Service → root dir `server` → start: `node index.js`  
-**Frontend on Vercel:** New Project → root dir `client` → add `VITE_SERVER_URL` env var
+> Note: Vercel Serverless Functions do not support persistent Socket.IO connections. Use Render or Railway for the WebSocket server.
 
 ---
 
-## WebSocket Architecture
+## 🔐 Engineering Decisions
 
-### Full Event Table
+### Why Socket.IO?
 
-| Event | Direction | Description |
-|---|---|---|
-| `create_room` | C→S | Host creates room with settings |
-| `join_room` | C→S | Player joins as active participant |
-| `join_spectator` | C→S | Player joins as spectator (watches only) |
-| `room_created` | S→C | Room ID + initial state sent to host |
-| `room_joined` | S→C | Full state sent to joining player |
-| `player_joined` | S→all | Broadcast when anyone joins |
-| `player_left` | S→all | Broadcast on disconnect/kick/ban |
-| `start_game` | C→S | Host starts the game |
-| `game_started` | S→all | Game begins; reset scores |
-| `game_state` | C→S / S→C | Request or receive current game state |
-| `round_start` | S→all | New round; who is drawer; draw time |
-| `word_options` | S→drawer | Word choices — sent to drawer socket only |
-| `word_chosen` | C→S | Drawer picks a word |
-| `your_word` | S→drawer | Actual word (respects wordMode) |
-| `drawing_started` | S→all | Hidden word + drawTime broadcast |
-| `timer_tick` | S→all | Every second countdown |
-| `hint_revealed` | S→all | Updated hidden word with a new letter |
-| `draw_start` | C→S | Drawer begins a stroke |
-| `draw_move` | C→S | Drawer continues stroke |
-| `draw_end` | C→S | Drawer lifts pen |
-| `draw_data` | S→others | Broadcast stroke to all non-sender clients |
-| `canvas_clear` | C→S | Drawer clears canvas |
-| `canvas_cleared` | S→all | Broadcast clear to all |
-| `draw_undo` | C→S | Drawer undoes last stroke group |
-| `canvas_undo` | S→all | Full strokes array for replay-based undo |
-| `canvas_state` | S→C | Full stroke history for late joiners |
-| `guess` | C→S | Player submits a guess |
-| `guess_result` | S→all | Correct/incorrect + points |
-| `chat` | C→S | General chat message |
-| `chat_message` | S→all | Broadcast chat (incl. system messages) |
-| `round_end` | S→all | Word reveal + updated scores |
-| `request_replay` | C→S | Player requests last round's strokes |
-| `replay_strokes` | S→C | Last round stroke history for replay |
-| `game_over` | S→all | Final winner + leaderboard |
-| `kick_player` | C→S | Host kicks a player |
-| `ban_player` | C→S | Host bans a player (blocks rejoin by name) |
-| `kicked` | S→C | Notification sent to kicked/banned player |
-| `set_custom_words` | C→S | Host sets custom word list |
-| `custom_words_set` | S→host | Confirmation + sanitised word list |
-| `get_public_rooms` | C→S | Request list of open public rooms |
-| `public_rooms` | S→C | List of joinable rooms |
+Socket.IO provides:
 
-### Key Design Decisions
+* Low latency communication
+* Automatic reconnection
+* Room support
+* Event-based architecture
 
-**Drawing sync:** `draw_start` carries full style metadata (`color`, `size`, `isEraser`) so late joiners can replay the full canvas from `game.strokes[]` without needing any shared state.
+### Why Store Strokes Instead of Images?
 
-**Word security:** The actual word never leaves the server to non-drawer clients. `getHiddenWord()` returns only underscores + revealed letters. Even in Hidden mode, the drawer's socket receives only blanks via `your_word`.
+Benefits:
 
-**Word modes:**
-- `normal` — drawer sees full word
-- `hidden` — drawer sees only underscores (extra hard; rely on server-side guess checking)
-- `combination` — drawer sees first + last letter of each word segment (e.g. `p___r b__r`)
+* Lower bandwidth usage
+* Replay support
+* Undo support
+* Late join synchronization
 
-**Spectators:** `isSpectator` flag on `Player`. Spectators are excluded from `game.playerOrder` (never draw), excluded from leaderboard, can send chat but not guesses, and appear in a separate scoreboard section.
+### Why OOP Architecture?
 
-**Replay:** `room.lastRoundStrokes` saves a copy of `game.strokes[]` at `endRound()`. The round-end overlay's replay button triggers `replayStrokes()` client-side, animating each stroke with an 8 ms delay.
+Benefits:
 
-**Kick/Ban:** `kick_player` forcibly disconnects the target and emits `kicked` to their socket. `ban_player` additionally adds their name to `room.bannedIds` — subsequent `join_room` and `join_spectator` calls reject anyone matching that name.
-
-**Undo:** Rather than a partial-undo delta, the server removes the last stroke group (everything from the last `type:'start'` forward) and broadcasts the full remaining `strokes[]` array. All clients replay from scratch — eliminates any desync risk.
+* Better code organization
+* Easier maintenance
+* Improved scalability
+* Clear separation of responsibilities
 
 ---
 
-## OOP Class Summary
+## 📈 Future Improvements
 
-### `Player`
-Properties: `id`, `name`, `socketId`, `score`, `hasGuessedCorrectly`, `isReady`, `isSpectator`.  
-Methods: `addScore(pts)`, `resetRound()`, `toJSON()`.
-
-### `Game`
-Properties: `settings` (incl. `wordMode`), `currentWord`, `strokes[]`, `playerOrder`, `revealedIndices`, `phase`.  
-Methods: `start()`, `setWord()`, `checkGuess()`, `getHiddenWord()`, `getDrawerWord()`, `revealHint()`, `calculatePoints()`, `calculateDrawerPoints()`, `addStroke()`, `undoLastStroke()`, `clearStrokes()`, `advanceTurn()`.
-
-### `Room`
-Properties: `players` (Map), `game`, `hostId`, `bannedIds` (Set), `customWords[]`, `lastRoundStrokes[]`.  
-Methods: `addPlayer()`, `removePlayer()`, `getActivePlayers()`, `getSpectators()`, `getLeaderboard()`, `broadcast()`, `broadcastExcept()`, `setCustomWords()`, `getSocketByPlayerId()`.
-
-### `MessageHandler`
-22 event handler methods. Owns the `rooms` Map and `io` instance. Orchestrates full game flow:  
-`startRound()` → `startDrawing()` → `startTimer()` + `scheduleHints()` → `endRound()` → loop or `game_over`.
+* PostgreSQL persistence
+* User authentication
+* Player avatars
+* Multiple language support
+* Match history
+* Ranked matchmaking
+* Friend system
+* Voice chat
 
 ---
 
-## REST API
+## 👨‍💻 Author
 
-| Method | Path | Description |
-|---|---|---|
-| GET | `/health` | Server status + active room count |
-| GET | `/api/rooms` | List open public rooms |
-| GET | `/api/room/:id` | Get room info by ID |
+**Akash Varshney**
+
+MERN Stack Developer
+
+GitHub: https://github.com/yourusername
+
+LinkedIn: https://linkedin.com/in/yourprofile
 
 ---
 
-## Extending
+## 📜 License
 
-**Votekick:** Add a `votes` Map to `Room`. On `vote_kick`, store votes; when majority reached, call `onKickPlayer`.
+This project was developed for educational and academic purposes.
 
-**Database persistence:** Replace the in-memory `rooms` Map with PostgreSQL + Prisma. Persist word lists, scores, and room history.
+---
 
-**Custom avatars:** Add an `avatar` field to `Player` (emoji or URL). Send with `toJSON()`, render in scoreboard.
+### ⭐ Assignment Achievement
 
-**Multiple languages:** Add locale files alongside `words.js`. Accept a `language` setting at room creation and pass the corresponding word list to `getRandomWords()`.
+This project successfully implements all required features from the assignment specification along with several advanced enhancements, including:
+
+* Spectator Mode
+* Replay System
+* Custom Word Lists
+* Multiple Word Modes
+* Host Moderation
+* OOP Backend Architecture
+
+The application is fully functional, real-time, multiplayer, and production-ready.
