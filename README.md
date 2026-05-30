@@ -1,4 +1,19 @@
 # 🎨 Skribble – Real-Time Multiplayer Draw & Guess Game
+Project Description...
+
+## Screenshots
+
+### Home Page
+![Home](./Screenshots/home.png)
+
+### Lobby
+![Lobby](./Screenshots/Lobby.png)
+
+### Gameplay
+![Gameplay](./Screenshots/GamePlay.png)
+
+### Winner Screen
+![Winner](./Screenshots/Replay.png)
 
 A full-stack multiplayer drawing and guessing game inspired by **skribbl.io**, built using **React, Node.js, Express, and Socket.IO**.
 
