@@ -117,7 +117,7 @@ paper boat → p___r b__t
 | Canvas                  | HTML5 Canvas API          |
 | Styling                 | CSS3                      |
 | Storage                 | In-Memory Data Structures |
-| Deployment              | Render                    |
+| Deployment              | Render / Netlify          |
 
 ---
 
