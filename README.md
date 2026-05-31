@@ -346,7 +346,7 @@ Letters are progressively revealed during the round to help players guess the wo
 ### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/skribble.git
+git clone https://github.com/aakash1612/Scribble-clone
 cd skribble
 ```
 
@@ -449,28 +449,15 @@ Benefits:
 
 ---
 
-## 📈 Future Improvements
-
-* PostgreSQL persistence
-* User authentication
-* Player avatars
-* Multiple language support
-* Match history
-* Ranked matchmaking
-* Friend system
-* Voice chat
-
----
-
 ## 👨‍💻 Author
 
 **Akash Varshney**
 
 MERN Stack Developer
 
-GitHub: https://github.com/yourusername
+GitHub: https://github.com/aakash1612/EdTech_Platform
 
-LinkedIn: https://linkedin.com/in/yourprofile
+LinkedIn: https://www.linkedin.com/in/akash-varshney-5837171b5/
 
 ---
 
