@@ -18,9 +18,15 @@ Players can create public or private rooms, draw words in real time, guess drawi
 
 ### Home Page
 ![Home](./Screenshots/home.png)
+<p align="center">
+  <img src="./screenshots/home.png" width="900">
+</p>
 
 ### Lobby
 ![Lobby](./Screenshots/Lobby.png)
+<p align="center">
+  <img src="./screenshots/Lobby.png" width="900">
+</p>
 
 ### Gameplay
 ![Gameplay](./Screenshots/GamePlay.png)
@@ -30,6 +36,9 @@ Players can create public or private rooms, draw words in real time, guess drawi
 
 ### Winner Screen
 ![Winner](./Screenshots/Replay.png)
+<p align="center">
+  <img src="./screenshots/Replay.png" width="900">
+</p>
 
 ## 📌 Features
 
