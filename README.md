@@ -24,6 +24,9 @@ Players can create public or private rooms, draw words in real time, guess drawi
 
 ### Gameplay
 ![Gameplay](./Screenshots/GamePlay.png)
+<p align="center">
+  <img src="./screenshots/GamePlay.png" width="900">
+</p>
 
 ### Winner Screen
 ![Winner](./Screenshots/Replay.png)
