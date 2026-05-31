@@ -37,7 +37,7 @@ Players can create public or private rooms, draw words in real time, guess drawi
 ### Winner Screen
 ![Winner](./Screenshots/Replay.png)
 <p align="center">
-  <img src="./screenshots/Replay.png" width="900" , height = "300">
+  <img src="./screenshots/Replay.png" width="900" >
 </p>
 
 ## 📌 Features
