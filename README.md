@@ -8,9 +8,7 @@ Players can create public or private rooms, draw words in real time, guess drawi
 
 ## 🚀 Live Demo
 
-**Frontend:** https://scribble-clone.netlify.app/
-
-**Backend:** https://scribble-backend-4a3i.onrender.com
+** https://scribble-clone.netlify.app/
  
 ---
 
